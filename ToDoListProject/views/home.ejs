@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="CSS.css">
+
+<body>
+
+
+    <div class="wholeContainer">
+
+        <section>
+            <h1 class="heading">My First To Do List Project</h1>
+        </section>
+        <section class="date">
+            <% let date=new Date(); let options={ month: 'long' , day: 'numeric' , weekday: 'long' }; let
+                formattedDate=date.toLocaleDateString('en-US', options); %>
+                <h1>
+                    <%= formattedDate%>
+                </h1>
+
+
+        </section>
+        <div class="container">
+            <% if(array.length>0){%>
+                <% for(a=0;a<array.length;a++){ %>
+                    <div class="items">
+                        <p class="content">
+                            <%=array[a].Input%>
+                        </p>
+                        <div class="bothBtns">
+                            <form action="/" method="post">
+                                <input type="hidden" name="hidden" value="delete">
+                                <input type="hidden" name="indexToDelete" value="<%= a %>">
+                                <button class="delBtn">
+                                    <i style="color: white;" class="fa fa-trash-can"></i>
+                                </button>
+                            </form>
+
+                            <button class="editBtn" onclick="showEditForm('<%= a %>','<%= array[a].Input %>')">
+                                <i style="color: white;" class="fa fa-edit"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <%}%>
+                        <%}%>
+
+        </div>
+        <form action="/" method="post" class="add">
+            <input type="hidden" name="hidden" value="add">
+            <input type="hidden" name="indexToEdit" value="" id="indexToEdit">
+            <input id="addInput" type="text" name="addInput" placeholder="Add Task To Be Done">
+            <button onclick="check(event)" id="addBtn" type="submit">
+                <i style="color: white;" class="fas fa-plus"></i>
+            </button>
+        </form>
+
+    </div>
+</body>
+<script>
+    let addInput = document.getElementById('addInput');
+    function showEditForm(index, value) {
+        console.log("it is value to edit", value)
+        addInput.value = value;
+
+        var addBtnIcon = document.querySelector('#addBtn i');
+        addBtnIcon.classList.remove('fa-plus');
+        addBtnIcon.classList.add('fa-check');
+
+        let indexToEdit = document.getElementById("indexToEdit");
+        indexToEdit.value = index;
+    }
+    function check(event) {
+        let addInput = document.getElementById("addInput");
+        if (addInput.value.length == 0) {
+            alert("Enter Some Input");
+            event.preventDefault();
+        }
+    }
+</script>
+
+</html>
